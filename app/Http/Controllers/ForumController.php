@@ -19,11 +19,23 @@ class ForumController extends Controller
     public function showForum()
     {
         //
-        $users= User::all();
-        $commentaires= commentaire::all();
-        $categories = categorie::all();
-        $rubriques = rubrique::all();
-        return view('welcome',compact('users','categories','rubriques'));
+        $user = Auth::user();
+       
+        $categories = Categorie::withCount('rubriques')->get();
+        $rubriques = rubrique::paginate(4);
+        $totalRubriques = rubrique::count();
+        $rubriquesWithCommentsCount = rubrique::with(['commentaires' => function ($query) {
+            $query->selectRaw('rubriques_id, count(*) as commentaire_count')->groupBy('rubriques_id');
+        }])->paginate(4);
+
+        $rubriquefreaquents = Rubrique::withCount('commentaires')->orderByDesc('commentaires_count')->paginate(4);
+        ;
+          
+        return view('rubriques.index', compact("rubriquesWithCommentsCount"))
+        ->with('totalRubriques', $totalRubriques)
+        ->with('categories', $categories)
+        ->with('rubriquefreaquents', $rubriquefreaquents);
+        ;
     }
     public function redirection()
     {
@@ -39,12 +51,13 @@ class ForumController extends Controller
                 }
     
 }
-public function userlist()
+public function userlist( )
     {
         //
-        
+        $rubriques = rubrique::first();
         $users = User::paginate(20);
-        return view('userlist',compact('users')) ;
+        return view('userlist',compact('users'))
+        ->with('rubriques', $rubriques);
         
     
 }

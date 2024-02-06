@@ -18,7 +18,7 @@ use App\Models\User;
 |
 */
 
-Route::get('/', [RubriqueController::class, 'index']);
+Route::get('/', [ForumController::class, 'showForum']);
 
 Route::middleware([
     'auth:sanctum',
@@ -47,7 +47,7 @@ Route::get('/userlist', [ForumController::class, 'userlist'])->name('userlist');
 Route::get('/statistiques', [ForumController::class, 'userCreationChart']);
 Route::get('/userlist', [ForumController::class, 'userlist'])->name('userlist');
 Route::delete('/user/{id}',[ForumController::class , 'userDelete'])->name('user.destroy');
-route::get('autocomplete', [ForumController::class, 'search'])->name('rubriques.search');
+route::get('autocomplete/', [ForumController::class, 'search'])->name('rubriques.search');
 
 });
 

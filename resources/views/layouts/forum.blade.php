@@ -134,13 +134,7 @@
                 </div>
             </li>
             @else
-            <div class="off-canvas-btn-box px-4 pt-5 text-center">
             
-                <a href="{{ route('login')}}" class="btn theme-btn theme-btn-sm"><i class="la la-sign-in mr-1"></i>se connecter</a>
-                <span class="fs-15 fw-medium d-inline-block mx-2">Or</span>
-                <a href="{{ route('register')}}" class="btn theme-btn theme-btn-sm"><i class="la la-plus mr-1">S'inscrire</a>
-           
-        </div>
            @endif 
             
             
@@ -299,7 +293,7 @@
                 $('#searchResults').empty();
 
                 $.each(data, function(index, rubrique) {
-                    var listItem = '<li><a href="{{ route('post.show' ,$rubrique->id)}}">' + rubrique.titre + '</a></li>';
+                    var listItem = '<li>' + rubrique.titre + '</li>';;
                     $('#searchResults').append(listItem);
                 });
 
