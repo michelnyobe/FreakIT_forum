@@ -13,7 +13,7 @@ class CategorieController extends Controller
     public function index()
     {
         //
-        $categories = Categorie::withCount('rubriques', 'commentaires')->get();
+        $categories = Categorie::withCount('rubriques', 'commentaires')->paginate(20);
         return view('categories.index', compact("categories"));
     }
 

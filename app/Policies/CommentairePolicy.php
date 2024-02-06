@@ -50,7 +50,7 @@ class CommentairePolicy
     public function delete(User $user, commentaire $commentaire): bool
     {
         //
-        return ($user->id == $commentaire->users_id) || ($user->role == '2');
+        return ($user->id == $commentaire->users_id) || ($user->roles_id == '2');
     }
 
     /**

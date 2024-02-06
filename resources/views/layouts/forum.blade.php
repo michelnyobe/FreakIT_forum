@@ -32,9 +32,7 @@
                     <div class="logo-box">
                         <a href="{{ route('dashboard')}}" class="logo"><img src="../images/logo-black.png" alt="logo"></a>
                         <div class="user-action">
-                            <div class="search-menu-toggle icon-element icon-element-xs shadow-sm mr-1" data-toggle="tooltip" data-placement="top" title="Search">
-                                <i class="la la-search"></i>
-                            </div>
+                            
                             <div class="off-canvas-menu-toggle icon-element icon-element-xs shadow-sm mr-1" data-toggle="tooltip" data-placement="top" title="Main menu">
                                 <i class="la la-bars"></i>
                             </div>
@@ -51,8 +49,10 @@
                         </nav><!-- end main-menu -->
                         <form method="post" class="mr-2">
                             <div class="form-group mb-0">
-                                <input class="form-control form--control form--control-bg-gray" type="text" name="search" placeholder="recherhe....">
-                                <button class="form-btn" type="button"><i class="la la-search"></i></button>
+                                
+                                <form id="searchForm">
+                                    <input type="text" name="query" id="query" placeholder="Recherche..." class="form-control form--control form--control-bg-gray">
+                                </form>
                             </div>
                         </form>
                         <div class="nav-right-button">
@@ -103,14 +103,47 @@
             <div class="off-canvas-menu-close icon-element icon-element-sm shadow-sm" data-toggle="tooltip" data-placement="left" title="Close menu">
                 <i class="la la-times"></i>
             </div><!-- end off-canvas-menu-close -->
-            <ul class="generic-list-item off-canvas-menu-list pt-90px">
-               
+            <ul class="generic-list-item off-canvas-menu-list pt-90px">  
             </ul>
+            @if(auth()->check())
+            <li class="dropdown user-dropdown">
+                <a class="nav-link dropdown-toggle dropdown--toggle pl-2" href="#" id="userMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="media media-card media--card shadow-none mb-0 rounded-0 align-items-center bg-transparent">
+                        <div class="media-img media-img-xs flex-shrink-0 rounded-full mr-2">
+                            @if(auth()->user()->profile_photo_path)
+                            <img src="{{asset('storage/' . Auth()->user()->profile_photo_path) }}" alt="{{asset('storage/' . Auth::user()->profile_photo_path) }}">
+                            @else
+                            <img src="{{ asset('img/avatar.jpg') }}" alt="Avatar">
+                            @endif
+                        </div>
+                        <div class="media-body p-0 border-left-0">
+                            <h5 class="fs-14">{{ Auth::user()->name }}!</h5>
+                        </div>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown--menu dropdown-menu-right mt-3 keep-open" aria-labelledby="userMenuDropdown">
+                    <h6 class="dropdown-header">Hi,{{ Auth::user()->name }}</h6>
+                    <div class="dropdown-divider border-top-gray mb-0"></div>
+                    <div class="dropdown-item-list">
+                        <a class="dropdown-item" href="{{ route('profile.show') }}"><i class="la la-user mr-2"></i>Profile</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="text-red-500 hover:underline dropdown-item"><i class="la la-power-off mr-2"></i>Se déconnecter</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+            @else
             <div class="off-canvas-btn-box px-4 pt-5 text-center">
-                <a href="login.html" class="btn theme-btn theme-btn-sm theme-btn-outline"><i class="la la-sign-in mr-1"></i> Login</a>
+            
+                <a href="{{ route('login')}}" class="btn theme-btn theme-btn-sm"><i class="la la-sign-in mr-1"></i>se connecter</a>
                 <span class="fs-15 fw-medium d-inline-block mx-2">Or</span>
-                <a href="signup.html" class="btn theme-btn theme-btn-sm"><i class="la la-plus mr-1"></i> Sign up</a>
-            </div>
+                <a href="{{ route('register')}}" class="btn theme-btn theme-btn-sm"><i class="la la-plus mr-1">S'inscrire</a>
+           
+        </div>
+           @endif 
+            
+            
         </div><!-- end off-canvas-menu -->
         <div class="user-off-canvas-menu custom-scrollbar-styled">
             <div class="user-off-canvas-menu-close icon-element icon-element-sm shadow-sm" data-toggle="tooltip" data-placement="left" title="Close menu">
@@ -124,6 +157,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="user-profile-menu-tab" data-toggle="tab" href="#user-profile-menu" role="tab" aria-controls="user-profile-menu" aria-selected="false">Profile</a>
                 </li>
+               
+
+                                            
             </ul>
             <div class="tab-content pt-3" id="myTabContent2">
                 <div class="tab-pane fade show active" id="user-notification-menu" role="tabpanel" aria-labelledby="user-notification-menu-tab">
@@ -201,7 +237,19 @@
         <div class="body-overlay"></div>
     </header>
 
-
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Résultats de la recherche</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <ul id="searchResults"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
     @yield('content')
 
@@ -218,7 +266,7 @@
         <div class="container">
             <div class="row align-items-center pb-4 copyright-wrap">
                 <div class="col-lg-6">
-                    <a href="index.html" class="d-inline-block">
+                    <a href="{{ route('dashboard')}}" class="d-inline-block">
                         <img src="images/logo-white.png" alt="footer logo" class="footer-logo">
                     </a>
                 </div><!-- end col-lg-6 -->
@@ -238,7 +286,30 @@
     <script src="../js/selectize.min.js"></script>
     <script src="../js/jquery.multi-file.min.js"></script>
     <script src="../js/main.js"></script>
+    <script>
+    $(document).ready(function() {
+    $('#query').keyup(function() {
+        var query = $(this).val();
 
+        $.ajax({
+            url: "{{ route('rubriques.search') }}",
+            method: 'GET',
+            data: { query: query },
+            success: function(data) {
+                $('#searchResults').empty();
+
+                $.each(data, function(index, rubrique) {
+                    var listItem = '<li><a href="{{ route('post.show' ,$rubrique->id)}}">' + rubrique.titre + '</a></li>';
+                    $('#searchResults').append(listItem);
+                });
+
+                $('#searchModal').modal('show');
+            }
+        });
+    });
+});
+</script>
+    
     </body>
 
     </html>

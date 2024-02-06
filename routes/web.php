@@ -41,11 +41,14 @@ Route::resource('categories', CategorieController::class);
 Route::get('/test',function(){
     return view('test');
 });
-Route::get('/userupdate', [ForumController::class, 'userUpdate'])->name('userUpdate');
-Route::get('/userdetete', [ForumController::class, 'userDelete'])->name('userDelete');
+
+Route::put('/user/{id}', [ForumController::class, 'userUpdate'])->name('userUpdate');
 Route::get('/userlist', [ForumController::class, 'userlist'])->name('userlist');
 Route::get('/statistiques', [ForumController::class, 'userCreationChart']);
 Route::get('/userlist', [ForumController::class, 'userlist'])->name('userlist');
+Route::delete('/user/{id}',[ForumController::class , 'userDelete'])->name('user.destroy');
+route::get('autocomplete', [ForumController::class, 'search'])->name('rubriques.search');
+
 });
 
 

@@ -324,37 +324,7 @@
                 <div class="sidebar">
                     <div class="card card-item">
                         <div class="card-body">
-                            <h3 class="fs-17 pb-3">Number Achievement</h3>
-                            <div class="divider"><span></span></div>
-                            <div class="row no-gutters text-center">
-                                <div class="col-lg-6 responsive-column-half">
-                                    <div class="icon-box pt-3">
-                                        <span class="fs-20 fw-bold text-color">980k</span>
-                                        <p class="fs-14">Questions</p>
-                                    </div><!-- end icon-box -->
-                                </div><!-- end col-lg-6 -->
-                                <div class="col-lg-6 responsive-column-half">
-                                    <div class="icon-box pt-3">
-                                        <span class="fs-20 fw-bold text-color-2">610k</span>
-                                        <p class="fs-14">Answers</p>
-                                    </div><!-- end icon-box -->
-                                </div><!-- end col-lg-6 -->
-                                <div class="col-lg-6 responsive-column-half">
-                                    <div class="icon-box pt-3">
-                                        <span class="fs-20 fw-bold text-color-3">650k</span>
-                                        <p class="fs-14">Answer accepted</p>
-                                    </div><!-- end icon-box -->
-                                </div><!-- end col-lg-6 -->
-                                <div class="col-lg-6 responsive-column-half">
-                                    <div class="icon-box pt-3">
-                                        <span class="fs-20 fw-bold text-color-4">320k</span>
-                                        <p class="fs-14">Users</p>
-                                    </div><!-- end icon-box -->
-                                </div><!-- end col-lg-6 -->
-                                <div class="col-lg-12 pt-3">
-                                    <p class="fs-14">To get answer of question <a href="signup.html" class="text-color hover-underline">Join<i class="la la-arrow-right ml-1"></i></a></p>
-                                </div>
-                            </div><!-- end row -->
+                            
                         </div>
                     </div><!-- end card -->
                     

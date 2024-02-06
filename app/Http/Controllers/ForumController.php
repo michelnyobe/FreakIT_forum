@@ -59,7 +59,7 @@ public function userUpdate( Request $request , $id)
     
 
     
-    return redirect()->back()->with('success', 'sujet modifié avec succès.'); ;
+    return redirect('bob') ;
         
     
 }
@@ -85,5 +85,18 @@ public function userCreationChart()
     return view('statistique', compact('labels', 'data'));
 }
 
+public function userDelete($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+    return redirect()->route('users.index')->with('success', 'Utilisateur supprimé avec succès');
+}
+public function search(Request $request)
+{
+    $query = $request->get('query');
+    $rubriques = Rubrique::where('titre', 'like', '%'.$query.'%')->get();
+
+    return response()->json($rubriques);
+}
 
 }

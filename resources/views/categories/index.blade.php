@@ -21,15 +21,15 @@
             <div class="d-flex flex-wrap align-items-center justify-content-between pb-4">
                 <div class="pr-3">
                     <h3 class="fs-22 fw-medium">Categories</h3>
-                    <p class="fs-15 lh-22 my-2">A tag is a keyword or label that categorizes your question with other, similar questions.
-                        <br> Using the right tags makes it easier for others to find and answer your question.</p>
+                    <p class="fs-15 lh-22 my-2"> classez votre sujet avec d'autres sujets similaires.
+                        <br> L'utilisation des bonnes categorie permet aux autres de trouver des sujets plus facilement </p>
                 </div>
                 <a href="{{ route('categories.create') }}" class="btn theme-btn theme-btn-sm" data-toggle="modal" data-target="#exampleModal">creer une categorie</a>
             </div>
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <form method="post" class="mr-3 w-25">
                     <div class="form-group">
-                        <input class="form-control form--control form-control-sm h-auto lh-34" type="text" name="search" placeholder="Filter by tag name">
+                        <input class="form-control form--control form-control-sm h-auto lh-34" type="text" name="search" placeholder="trouver une categorie">
                         <button class="form-btn" type="button"><i class="la la-search"></i></button>
                     </div>
                 </form>
@@ -51,12 +51,12 @@
                             {{ $categorie->details }}
                         </p>
                         
-                            <!-- Bouton Modifier -->
+                            
                             <div class="container mt-5 row">
-                                <!-- Bouton Modifier -->
+                              
                                 <a href="{{ route('categories.edit', $categorie->id) }}" class="btn btn-primary col-6">Modifier</a>
                             
-                                <!-- Bouton Supprimer -->
+                                
                                 <form action="{{ route('categories.destroy', $categorie->id) }}" method="POST" class="col-6">
                                     @csrf
                                     @method('DELETE')
@@ -70,12 +70,12 @@
                             <p class="pr-1 lh-18">{{ $categorie->rubriques_count}} sujets</p>
                             <p class="lh-18">{{$categorie->commentaires_count}} commentaires</p>
                         </div>
-                    </div><!-- end card-body -->
-                </div><!-- end card -->
+                    </div>
+                </div>
             </div> 
             @endforeach
         </div>
-        <!-- Modal -->
+        
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -110,26 +110,9 @@
 
         <div class="pager pt-30px">
             <nav aria-label="Page navigation example">
-                <ul class="pagination generic-pagination pr-1">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true"><i class="la la-arrow-left"></i></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true"><i class="la la-arrow-right"></i></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </li>
-                </ul>
+                {{ $categories->links('pagination::bootstrap-4') }}    
             </nav>
-            <p class="fs-13 pt-2">Showing 1-20 of 50,577 results</p>
+            
         </div>
     </div><!-- end container -->
 </section><!-- end question-area -->

@@ -37,7 +37,7 @@
                     </a>
                     <div class="media-body">
                         <h5 class="fs-16 fw-medium"><a href="user-profile.html">{{ $user->name}}</a></h5>
-                        <small class="meta d-block lh-24 pb-1"><span>NaN</span></small>
+                        <small class="meta d-block lh-24 pb-1"><span>{{ $user->roles->intitule }}</span></small>
                         <p class="fw-medium fs-15 text-black-50 lh-18">
                             @if($user->actived)
                             <p>En ligne</p>
@@ -45,8 +45,16 @@
                             <p>Hors ligne</p>
                         @endif
                         </p>
-                        
-                    </div>
+                        <div class="form-group">
+
+                            <input type="range" min="1" max="2" value="{{ $user->roles_id }}" class="slider" id="roleSlider{{ $user->id }}">
+                        </div>
+ 
+                    </div><form action="{{ route('user.destroy', $user->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur?')" class="btn btn-danger" >Supprimer</button>
+                    </form>
                     
                 </div>
             </div>
@@ -54,5 +62,43 @@
         </div>       
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliders = document.querySelectorAll('.slider');
+        sliders.forEach(slider => {
+            slider.addEventListener('input', function() {
+                const selectedRoleId = this.value;
+                const userId = this.id.replace('roleSlider', '');
+                updateRole(userId, selectedRoleId);
+            });
+        });
+    });
+
+    function updateRole(userId, roleId) {
+        // Envoyer une requête AJAX pour mettre à jour le rôle de l'utilisateur
+        fetch(`/user/${userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ roles_id: roleId })
+        })
+        .then(response => {
+            if (response.ok) {
+                
+                console.log(`Rôle de l'utilisateur ${userId} mis à jour avec succès`);
+                // Recharger la page /userlist
+               
+                location.reload();
+            } else {
+                console.error(`Erreur lors de la mise à jour du rôle de l'utilisateur ${userId}`);
+            }
+        })
+        .catch(error => console.error(`Erreur lors de la mise à jour du rôle de l'utilisateur ${userId}:`, error));
+        
+    }
+   
+</script>
 
 @endsection
