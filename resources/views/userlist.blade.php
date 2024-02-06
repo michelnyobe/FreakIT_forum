@@ -19,7 +19,7 @@
                 <div class="btn-group btn--group mb-3" role="group" aria-label="Filter button group">
                     <a href="{{ route('post.index')}}" class="btn active">tous les sujets</a>
                     <a href="{{ route('categories.index')}}" class="btn">les categories</a>
-                    <a href="{{route('')}}" class="btn">Statistiques</a>
+                   
                     
                 </div>
             </div>
@@ -32,16 +32,22 @@
                         @if ($user->profile_photo_path)
                                         <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="avatar">
                                         @else
-                                        <img src="{{ asset('images/default-profile-photo.jpg') }}" alt="avatar" >
+                                        <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" >
                                         @endif
                     </a>
                     <div class="media-body">
                         <h5 class="fs-16 fw-medium"><a href="user-profile.html">{{ $user->name}}</a></h5>
                         <small class="meta d-block lh-24 pb-1"><span>NaN</span></small>
                         <p class="fw-medium fs-15 text-black-50 lh-18">
-                           NaN
+                            @if($user->actived)
+                            <p>En ligne</p>
+                            @else
+                            <p>Hors ligne</p>
+                        @endif
                         </p>
+                        
                     </div>
+                    
                 </div>
             </div>
             @endforeach

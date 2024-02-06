@@ -60,12 +60,28 @@
                     <div class="question-highlight">
                         <div class="media media-card shadow-none rounded-0 mb-0 bg-transparent p-0">
                             <div class="media-body">
+                                <div class="media media-card user-media align-items-center">
+                                            <a href="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}"" class="media-img d-block">
+                                                @if ($rubrique->users->profile_photo_path)
+                                                <img src="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}" alt="avatar">
+                                                @else
+                                                <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" >
+                                                @endif
+                                            </a>
+                                            <h5 class="pb-1">{{ $rubrique->users->name}}</h5>
+                                            @if($rubrique->users->actived)
+                                            <h6 style="font-size: 10px">En ligne</h6>
+                                            @else
+                                            <h6 style="font-size: 10px">Hors ligne</h6>
+                                            @endif
+                                </div>
                                 <h5 class="fs-20">{{ $rubrique->titre }}</h5>
                                 <div class="meta d-flex flex-wrap align-items-center fs-13 lh-20 py-1">
                                     <div class="pr-3">
                                         <span>poste</span>
                                         <span class="text-black">{{ $rubrique->created_at->diffForHumans() }}</span>
                                     </div>
+                                    @can( 'update', $rubrique)
                                     <div class="pr-3">
                                         @if($rubrique->etat == 1)
                                         <span class="text-black d-block lh-18"><span class="ball gold" style="width: 10px; height: 10px;"></span>ouvert</span>
@@ -85,14 +101,18 @@
                                         <span class="text-black d-block lh-18"><span class="ball silver" style="width: 10px; height: 10px;"></span>ferme</span>
                                         @endif
                                     </div>
+                                    
+                                    @endcan
+                                    @can( 'delete', $rubrique)
                                     <form action="{{ route('post.destroy', $rubrique->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                     
-                                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rubrique et tous ses commentaires ?')">
+                                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette rubrique et tous ses commentaires ?')" class="btn btn-danger">
                                             Supprimer la rubrique
                                         </button>
                                     </form>
+                                    @endcan
                                 </div>
                                 
                             </div>
@@ -144,20 +164,28 @@
                                                 @if ($rubrique->users->profile_photo_path)
                                                 <img src="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}" alt="avatar">
                                                 @else
-                                                <img src="{{ asset('images/default-profile-photo.jpg') }}" alt="avatar" >
+                                                <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" >
                                                 @endif
                                             </a>
                                             <h5 class="pb-1"><a href="user-profile.html">{{ $commentaire->users->name}}</a></h5>
+                                            @if($commentaire->users->actived)
+                                            <h6 style="font-size: 10px">En ligne</h6>
+                                            @else
+                                            <h6 style="font-size: 10px">Hors ligne</h6>
+                                            @endif
                                             <div class="bg-gray-100 p-4 mt-4">
-                                                {!! RubriqueController::rendreLiensCliquables($commentaire->commentaire) !!}
+                                                {!! RubriqueController::rendreLiensCliquables($commentaire->commentaire) !!}<br/>
+                                                <h6 style="font-size: 10px">{{ $commentaire->users->banner}}</h6>
                                             </div>
                                                 <small class="meta d-block items-center">
+                                                    @can( 'delete', $commentaire)
                                                     <form method="POST" action="{{ route('commentaire.destroy', $commentaire->id) }}" class="d-inline">
                                                         @csrf
                                                         @method('DELETE')
                                                         
                                                         <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?')">Supprimer</button>
                                                     </form>
+                                                    @endcan
                                                     <span class="d-block lh-18 fs-12">{{ $commentaire->created_at->diffForHumans() }}</span>
                                                 </small>
                                                      

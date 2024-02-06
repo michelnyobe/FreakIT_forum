@@ -13,6 +13,9 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\role;
 use App\Models\Commentaire;
 use App\Models\rubrique;
+use Illuminate\Auth\Events\Login;
+use Illuminate\Auth\Events\Logout;
+
 
 
 
@@ -29,6 +32,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
+    protected $dispatchesEvents = [
+        'login' => Login::class,
+        'logout' => Logout::class,
+    ];
+
     protected $fillable = [
         'name',
         'email',
@@ -36,6 +44,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'banner',
         'Birthdate',
         'roles_id',
+        'actived',
 
     ];
 
@@ -50,6 +59,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_recovery_codes',
         'two_factor_secret',
     ];
+    
 
     /**
      * The attributes that should be cast.
@@ -81,4 +91,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(rubrique::class, 'users_id');
     }
     
+
+
+
+    
+
+
 }

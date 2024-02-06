@@ -88,7 +88,7 @@ class CategorieController extends Controller
         // Enregistrez les modifications dans la base de données
         $categorie->save();
         return redirect()->route('categories.index')
-        ->with('success', 'Post updated successfully.');
+        ->with('success', 'categorie modifiée avec succès');
     }
 
     /**

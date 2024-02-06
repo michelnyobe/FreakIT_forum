@@ -4,13 +4,29 @@
     @php
     use App\Http\Controllers\RubriqueController;
     @endphp
+    @if(session('warning'))
+    <div  class="alert alert-warning alert-dismissible fade show notif" role="alert">
+        {{ session('warning') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+@endif
+@if(session('success'))
+    <div  class="alert alert-success alert-dismissible fade show notif" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+@endif
 <section class="question-area">
     <div class="container">
         <div class="row">
             <div class="col-lg-2 pr-0">
                 <div class="sidebar position-sticky top-0 pt-40px">
                     <ul class="generic-list-item generic-list-item-highlight fs-15">
-                        <li class="lh-26"><a href="#"><i class="la la-user mr-1 text-black"></i> Utilisateurs</a></li>
+                      
+                        <li class="lh-26"><a href="{{ route('userlist')}}"><i class="la la-user mr-1 text-black"></i> Utilisateurs</a></li>
+                       
                         <li class="lh-26"><a href="{{ route('categories.index')}}"><i class="la la-sort mr-1 text-black"></i> Categories</a></li>
                     </ul>
                 </div><!-- end sidebar -->
@@ -24,16 +40,7 @@
                         </div>
                         <div class="d-flex flex-wrap align-items-center justify-content-between">
                             <p class="pt-1 fs-15 fw-medium lh-20">{{ $totalRubriques }} Sujets</p>
-                            <div class="filter-option-box w-20">
-                                <select class="custom-select">
-                                    <option value="newest" selected="selected">Newest </option>
-                                    <option value="featured">Bountied (390)</option>
-                                    <option value="frequent">Frequent </option>
-                                    <option value="votes">Votes </option>
-                                    <option value="active">Active </option>
-                                    <option value="unanswered">Unanswered </option>
-                                </select>
-                            </div><!-- end filter-option-box -->
+                            
                         </div>
                     </div><!-- end filters -->
                     <div class="questions-snippet border-top border-top-gray">
@@ -67,13 +74,17 @@
                                         @if ($rubrique->users->profile_photo_path)
                                         <img src="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}" alt="avatar">
                                         @else
-                                        <img src="{{ asset('images/default-profile-photo.jpg') }}" alt="avatar" >
+                                        <img src="{{ asset('img/avatar.jpg') }}" alt="avatar" >
                                         @endif
                                     </a>
                                     <div class="media-body d-flex flex-wrap align-items-center justify-content-between">
                                         <div>
                                             <h5 class="pb-1"><a href="#">{{ $rubrique->users->name}}</a></h5>
-                                            
+                                            @if($rubrique->users->actived)
+                                            <h6 style="font-size: 10px">En ligne</h6>
+                                            @else
+                                            <h6 style="font-size: 10px">Hors ligne</h6>
+                                            @endif
                                         </div>
                                         <small class="meta d-block text-right">
                                             @if($rubrique->etat == 1)
@@ -132,7 +143,7 @@
                             <div class="tags pt-4">
                                 @foreach($categories as $categorie)
                                 <div class="tag-item">
-                                    <a href="#" class="tag-link tag-link-md">{{ $categorie->intitule}}</a>
+                                    <a href="{{ route('categories.show', $categorie->id)}}" class="tag-link tag-link-md">{{ $categorie->intitule}}</a>
                                     <span class="item-multiplier fs-13">
                                     <span>x</span>
                                     <span>{{ $categorie->rubriques_count}} sujet</span>

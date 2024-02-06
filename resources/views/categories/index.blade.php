@@ -1,6 +1,20 @@
 @extends('layouts.forum')
 
 @section('content')
+@if(session('warning'))
+    <div  class="alert alert-warning alert-dismissible fade show notif" role="alert">
+        {{ session('warning') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+@endif
+@if(session('success'))
+    <div  class="alert alert-success alert-dismissible fade show notif" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+@endif
 <section class="question-area pt-40px pb-40px">
     <div class="container">
         <div class="filters pb-3">
@@ -46,7 +60,7 @@
                                 <form action="{{ route('categories.destroy', $categorie->id) }}" method="POST" class="col-6">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    <button type="submit"  onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette categorie?')" class="btn btn-danger">Supprimer</button>
                                 </form>
                                 
                                 
@@ -122,15 +136,9 @@
 
 
 <script>
-    // Initialisation des infobulles Bootstrap
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    });
 
-    function confirmDelete() {
-        if (confirm("Voulez-vous vraiment supprimer cet élément?")) {
-        document.getElementById("deleteForm").submit();
-    } 
-    }
+setTimeout(function(){
+    $('.notif').alert('close');
+}, 5000);
 </script>
 @endsection

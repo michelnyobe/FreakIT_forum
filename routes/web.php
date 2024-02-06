@@ -5,7 +5,7 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\RubriqueController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\CategorieController;
-
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,29 +25,31 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [RubriqueController::class, 'index'])->name('dashboard');
+    
     
     
     Route::resource('post', RubriqueController::class);
     Route::resource('commentaire', CommentaireController::class);
-});
-
-// route 
+    
 Route::get('/testregister',function(){
     return view('forum.testregister');
 });
 Route::get('home',[ForumController::class, 'redirection']);
-Route::get('/home',function(){
-    return view('dashboardUser');
-});
-Route::get('/home',function(){
-    return view('dashboardUser');
-});
+
 Route::resource('categories', CategorieController::class);
 Route::get('/test',function(){
     return view('test');
 });
-Route::get('/userlist', [ForumController::class, 'userlist']);
+Route::get('/userupdate', [ForumController::class, 'userUpdate'])->name('userUpdate');
+Route::get('/userdetete', [ForumController::class, 'userDelete'])->name('userDelete');
+Route::get('/userlist', [ForumController::class, 'userlist'])->name('userlist');
 Route::get('/statistiques', [ForumController::class, 'userCreationChart']);
+Route::get('/userlist', [ForumController::class, 'userlist'])->name('userlist');
+});
+
+
+
+    
+     // Exemple de route pour l'administrateur
+

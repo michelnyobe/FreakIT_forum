@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('banner');
             $table->string('Birthdate');
             $table->foreignId('roles_id')->constrained()->nullable();
-            $table->boolean('actived')->nullable();;
+            $table->boolean('actived')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

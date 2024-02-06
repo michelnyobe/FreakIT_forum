@@ -31,12 +31,12 @@ class ForumController extends Controller
         $role = Auth::user()->roles_id;
         switch ($role) {
             case 1:
-                return redirect('dashboard');
+                return redirect(route('dashboard'));
             case 2:
-                return redirect('dashboard');
-            case 3:
-                return redirect('/testregister');
-            }
+                return redirect(route('dashboard'));
+            default:    
+                return redirect(route('dashboard'));
+                }
     
 }
 public function userlist()
@@ -45,6 +45,21 @@ public function userlist()
         
         $users = User::paginate(20);
         return view('userlist',compact('users')) ;
+        
+    
+}
+public function userUpdate( Request $request , $id)
+    {
+        //
+        
+        $users = User::find($id);
+        $users->roles_id=$request->input('roles_id');
+        $users->save();
+    
+    
+
+    
+    return redirect()->back()->with('success', 'sujet modifié avec succès.'); ;
         
     
 }

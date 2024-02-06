@@ -4,3 +4,8 @@ lancer le projet
   - php artisan serve 
   lancer la base de donnee 
   - php artisan migrate
+
+
+  fonctionnalite  
+    -  ajouter un utilisateur 
+    -  ajouter un sujet 

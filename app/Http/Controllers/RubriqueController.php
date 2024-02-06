@@ -6,6 +6,7 @@ use App\Models\rubrique;
 use App\Models\categorie;
 use App\Models\commentaire;
 use App\Models\User;
+use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
@@ -13,12 +14,21 @@ use Illuminate\Support\Facades\DB;
 
 class RubriqueController extends Controller
 {
+    
+    public function __construct()
+    {
+        
+        
+
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index( )
     {
         //
+        $user = Auth::user();
+       
         $categories = Categorie::withCount('rubriques')->get();
         $rubriques = rubrique::paginate(4);
         $totalRubriques = rubrique::count();
@@ -28,7 +38,7 @@ class RubriqueController extends Controller
 
         $rubriquefreaquents = Rubrique::withCount('commentaires')->orderByDesc('commentaires_count')->paginate(4);
         ;
-
+          
         return view('rubriques.index', compact("rubriquesWithCommentsCount"))
         ->with('totalRubriques', $totalRubriques)
         ->with('categories', $categories)
@@ -42,6 +52,8 @@ class RubriqueController extends Controller
     public function create()
     {
         //
+      
+        
         $users= User::all()->pluck('name','id');
         $categories = categorie::all();
         return view('rubriques.create',compact('users','categories'));
@@ -86,11 +98,16 @@ class RubriqueController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(rubrique $rubrique, $id)
     {
         //
-        
-        $rubrique = rubrique::findOrFail($id);
+        $user = Auth::user();
+        $rubrique = rubrique::find($id);
+       
+        $user->can('view', $rubrique);
+       
+    
+       
         $commentaire = commentaire::where('rubriques_id', $id)->get();
         return view('rubriques.show',compact('rubrique','commentaire'));
     }

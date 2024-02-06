@@ -66,7 +66,7 @@
                                                 @if(auth()->user()->profile_photo_path)
                                                 <img src="{{asset('storage/' . Auth()->user()->profile_photo_path) }}" alt="{{asset('storage/' . Auth::user()->profile_photo_path) }}">
                                                 @else
-                                                <!-- Mettez ici une image par défaut si l'utilisateur n'a pas de photo de profil -->
+                                                <img src="{{ asset('img/avatar.jpg') }}" alt="Avatar">
                                                 @endif
 
                                             </div>
@@ -212,49 +212,7 @@
         <span class="vertical-bar-shape vertical-bar-shape-3"></span>
         <span class="vertical-bar-shape vertical-bar-shape-4"></span>
         <div class="container">
-            <div class="row">
-                <div class="col-lg-3 responsive-column-half">
-                    <div class="footer-item">
-                        <h3 class="fs-18 fw-bold pb-2 text-white">Company</h3>
-                        <ul class="generic-list-item generic-list-item-hover-underline pt-3 generic-list-item-white">
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Advertising</a></li>
-                        </ul>
-                    </div><!-- end footer-item -->
-                </div><!-- end col-lg-3 -->
-                <div class="col-lg-3 responsive-column-half">
-                    <div class="footer-item">
-                        <h3 class="fs-18 fw-bold pb-2 text-white">Legal Stuff</h3>
-                        <ul class="generic-list-item generic-list-item-hover-underline pt-3 generic-list-item-white">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a href="#">Cookie Policy</a></li>
-                        </ul>
-                    </div><!-- end footer-item -->
-                </div><!-- end col-lg-3 -->
-                <div class="col-lg-3 responsive-column-half">
-                    <div class="footer-item">
-                        <h3 class="fs-18 fw-bold pb-2 text-white">Help</h3>
-                        <ul class="generic-list-item generic-list-item-hover-underline pt-3 generic-list-item-white">
-                            <li><a href="#">Knowledge Base</a></li>
-                            <li><a href="#">Support</a></li>
-                        </ul>
-                    </div><!-- end footer-item -->
-                </div><!-- end col-lg-3 -->
-                <div class="col-lg-3 responsive-column-half">
-                    <div class="footer-item">
-                        <h3 class="fs-18 fw-bold pb-2 text-white">Connect with us</h3>
-                        <ul class="generic-list-item generic-list-item-hover-underline pt-3 generic-list-item-white">
-                            <li><a href="#"><i class="la la-facebook mr-1"></i> Facebook</a></li>
-                            <li><a href="#"><i class="la la-twitter mr-1"></i> Twitter</a></li>
-                            <li><a href="#"><i class="la la-linkedin mr-1"></i> LinkedIn</a></li>
-                            <li><a href="#"><i class="la la-instagram mr-1"></i> Instagram</a></li>
-                        </ul>
-                    </div><!-- end footer-item -->
-                </div><!-- end col-lg-3 -->
-            </div><!-- end row -->
+           
         </div><!-- end container -->
         <hr class="border-top-gray my-5">
         <div class="container">
@@ -265,10 +223,10 @@
                     </a>
                 </div><!-- end col-lg-6 -->
                 <div class="col-lg-6">
-                    <p class="copyright-desc text-right fs-14">Copyright &copy; 2021 <a href="https://techydevs.com/">TechyDevs</a> Inc.</p>
-                </div><!-- end col-lg-6 -->
-            </div><!-- end row -->
-        </div><!-- end container -->
+                    <p class="copyright-desc text-right fs-14">Copyright &copy; 2024 nyobe michel </p>
+                </div>
+            </div>
+        </div>
     </section>
     <div id="back-to-top" data-toggle="tooltip" data-placement="top" title="Return to top">
         <i class="la la-arrow-up"></i>
