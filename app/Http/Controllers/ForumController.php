@@ -102,7 +102,7 @@ public function userDelete($id)
 {
     $user = User::findOrFail($id);
     $user->delete();
-    return redirect()->route('users.index')->with('success', 'Utilisateur supprimé avec succès');
+    return redirect()->route('userlist')->with('success', 'Utilisateur supprimé avec succès');
 }
 public function search(Request $request)
 {

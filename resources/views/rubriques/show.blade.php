@@ -160,7 +160,7 @@
                                             @if($commentsExist)
                                             
                                             @foreach($commentaire as $commentaire)
-                                            <a href="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}"" class="media-img d-block">
+                                            <a href="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}" class="media-img d-block">
                                                 @if ($rubrique->users->profile_photo_path)
                                                 <img src="{{ asset('storage/' . $rubrique->users->profile_photo_path) }}" alt="avatar">
                                                 @else
